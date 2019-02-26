@@ -1,0 +1,24 @@
+.greenButton {
+    background-Color: green;
+    font: inherit;
+    border: 1px solid red;
+    padding: 8px;
+    box-Shadow: 0 2px 3px black;
+    cursor: pointer;
+    width: 200px;
+  }
+
+  .greenButton:hover {
+    background-color: lightgreen;
+  }
+
+  .redButton {
+    background-Color: red;
+    font: inherit;
+    border: 1px solid red;
+    padding: 8px;
+    box-Shadow: 0 2px 3px black;
+    cursor: pointer;
+    width: 200px;
+  }
+
