@@ -1,13 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import classes from './Cockpit.module.css';
+import AuthContext from '../../context/auth-context';
 
 const cockpit = ( props ) => {
+
+    const authContext = useContext(AuthContext);
 
     useEffect(() => {
         console.log('[Cockpit.js] useEffect');
         // http request...
         setTimeout(() => {
-            alert('Saved data to cloud!')
+            // alert('Saved data to cloud!')
         }, 500);
         return () => {
             console.log('Cockpit.js] Cleanup work in useEffect')
@@ -48,6 +51,14 @@ const cockpit = ( props ) => {
                 onClick={props.click}>
                 {buttonText}
             </button>
+
+            {/* // == Context using useContext == */}
+            <button onClick={authContext.login}>Login</button>
+
+            {/* // == Context using jsx tags == */}
+            {/* <AuthContext.Consumer>
+                { context => <button onClick={context.login}>Login</button> }
+            </AuthContext.Consumer> */}
 
         </div> 
     );

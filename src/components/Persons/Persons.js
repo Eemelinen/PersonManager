@@ -35,13 +35,17 @@ class Persons extends Component {
   render() {
     console.log('[Persons.js] rendering...');
     return this.props.persons.map(( person, index ) => {
-      return <Person
-        click={() => this.props.click( index )}
-        name={person.name}
-        age={person.age}
-        key={person.key}
-        changed={(event) => this.props.changed( event, person.key )} />
+      return (
+        <Person
+          click={() => this.props.click( index )}
+          name={person.name}
+          age={person.age}
+          key={person.key}
+          changed={(event) => this.props.changed( event, person.key )}
+          isAuth={this.props.isAuthenticated}
+        />
+      );
     });
-  }
-}
+  };
+};
   export default Persons;
