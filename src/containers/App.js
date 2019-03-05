@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 // import React, { useState } from 'react';
-import'./App.css';
-import '../components/Persons/Person/Person.css';
+import classes from './App.module.css';
+// import '../components/Persons/Person/Person.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
+import Aux from '../hoc/Auxiliary';
+import withClass from '../hoc/withClass';
 
 class App extends Component {
 
@@ -16,17 +18,21 @@ class App extends Component {
   state = {
     persons: [
       { key: "sacacs", name: "Eemeli", age: 15 },
-      { key: "1234", name: "Mathiass", age: 29 },
+      { key: "1234", name: "Mathias", age: 29 },
       { key: "12345", name: "Willem", age: 31 }
     ],
 
+    showCockpit: true,
+
     showPersons: false,
 
-    personsOriginal: [
-      { key: "sacacs", name: "Eemeli", age: 15 },
-      { key: "1234", name: "Mathiass", age: 29 },
-      { key: "12345", name: "Willem", age: 31 }
-    ]
+    changeCounter: 0
+
+    // personsOriginal: [
+    //   { key: "sacacs", name: "Eemeli", age: 15 },
+    //   { key: "1234", name: "Mathias", age: 29 },
+    //   { key: "12345", name: "Willem", age: 31 }
+    // ]
   }
 
 
@@ -53,11 +59,11 @@ class App extends Component {
   togglePersonsHandler = () => {
     const doesShow = this.state.showPersons;
 
-    const org = this.state.personsOriginal;
-
-    this.setState({
-      persons: org
-    })
+    //== Palauttaa alkuperäiset personit ==
+    // const org = this.state.personsOriginal;
+    // this.setState({
+    //   persons: org
+    // });
 
     this.setState( {
       showPersons: !doesShow
@@ -66,7 +72,7 @@ class App extends Component {
 
   deletePersonHandler = (personIndex) => {
 
-    // == Luodaan uusi käsiteltävä kopio staten persons arraysta.
+    // == Luodaan uusi käsiteltävä kopio staten persons arraysta. ==
     const persons = [...this.state.persons];
     persons.splice(personIndex, 1)
     this.setState({persons: persons})
@@ -91,9 +97,13 @@ class App extends Component {
 
     console.log(persons[personIndex]);
 
-    this.setState({persons: persons})
-
-  }
+    this.setState((prevState, props) => {
+      return {
+        persons: persons,
+        changeCounter: prevState.changeCounter + 1
+      };
+    });
+  };
 
   // == Component Creation Lifecycle (3) ==d
   render() {
@@ -110,23 +120,31 @@ class App extends Component {
           />
         </div>
       );
-    }
+    };
 
     return (
+      
+      <Aux>
 
-      <div className="App">
+        <button
+          onClick={() => {this.setState({showCockpit: false});
+          }}>
+          Remove Cockpit
+        </button>
 
-        <Cockpit
+        {this.state.showCockpit ? (
+          <Cockpit
           title={this.props.appTitle}
           click={this.togglePersonsHandler}
           showPersons={this.state.showPersons}
           persons={this.state.persons}
         />
+        ): null}
 
         {persons}
 
-      </div>
+      </Aux>
     )};
 };
 
-export default App;
+export default withClass(App, classes.App);

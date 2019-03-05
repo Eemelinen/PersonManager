@@ -1,10 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import classes from './Cockpit.module.css';
 
 const cockpit = ( props ) => {
 
+    useEffect(() => {
+        console.log('[Cockpit.js] useEffect');
+        // http request...
+        setTimeout(() => {
+            alert('Saved data to cloud!')
+        }, 500);
+        return () => {
+            console.log('Cockpit.js] Cleanup work in useEffect')
+        }
+    }, []);
+
     const assignedClasses = [];
     let buttonText = 'Show persons'
+    let buttonColor = classes.Green;
 
     if(props.persons.length === 2) {
         assignedClasses.push( classes.red )
@@ -13,8 +25,6 @@ const cockpit = ( props ) => {
     if(props.persons.length === 1) {
         assignedClasses.push( classes.bold )
     }
-
-    let buttonColor = classes.Green;
 
     if(props.showPersons) {
         buttonColor = classes.Red
